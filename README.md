@@ -1,0 +1,3 @@
+The first version of GeoCos has been developed as a desktop application allowing users to calculate geolocial chance of success values for exploration wells interactively.
+
+By this new version, GeoCos goes ONLINE! In addition to calculation of CoS with 3 table-based methods published in the last 20 years, results for each petroleum system element can be compared by bar and radar charts that can be downloaded for to display risk assessment summary. A short description for each table-based method and links to the research papers are also present.

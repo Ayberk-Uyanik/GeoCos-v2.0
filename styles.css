@@ -1,0 +1,350 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-content {
+  border: 1px solid black;
+  background-color: steelblue;
+  height: 150px;
+  margin-bottom: 5em;
+  padding: 20px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main_header {
+  display: block;
+  /* color: rgb(56, 48, 48); */
+  color: #fff;
+}
+
+.main_header h2 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.secondary_header {
+  align-items: center;
+  display: flex;
+}
+
+.secondary_header h2 {
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+  font-style: italic;
+  font-weight: lighter;
+}
+
+.repository {
+  text-align: center;
+  display: block;
+  flex-direction: row;
+  align-items: center;
+}
+
+.repository a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.repository h2 {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: lighter;
+  color: #fff;
+}
+
+#top_button {
+  display: none;
+  position: fixed;
+  padding: 15px;
+  border-radius: 8em;
+  border: none;
+  background-color: #fff;
+  outline: #ccc 1px solid;
+  z-index: 99;
+  bottom: 50px;
+  right: 80px;
+  width: 85px;
+  height: 85px;
+}
+
+#top_button:hover {
+  text-shadow: red;
+}
+
+.arrow_up {
+  border: solid black;
+  border-width: 0 1.5px 1.5px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.tab {
+  /* display: flex; */
+  padding: 25px;
+  margin: auto 1.5em;
+  /* border: 1px solid black; */
+  /* flex-direction:column; */
+  float: left;
+}
+
+.tab button {
+  border: none;
+  /* border-top-left-radius: 1em; */
+  /* border-top-right-radius: 1em; */
+  outline: 0.2px solid black;
+  cursor: pointer;
+  padding: 14px 16px;
+  /* transition: 0.3s; */
+  font-size: 18px;
+  font-weight: normal;
+  width: 15em;
+  margin-left: 1em;
+  background-color: lightgray;
+  /*color: rgb(214, 221, 226);*/
+  color: black;
+  display: block;
+  margin-top: 1px;
+}
+
+.tab button:hover {
+  background-color:steelblue;
+  color: white;
+  /*background-color: rgb(174, 204, 178);*/
+}
+
+.tab button:focus {
+  background-color: steelblue;
+  /*background-color: rgb(199, 146, 146);*/
+  /*background-color: rgb(174, 204, 178);*/
+  color: white;
+}
+
+.tabcontent {
+  margin: 1px 50px;
+  padding: 25px 25px;
+  border: 1px solid #ccc;
+  float: left;
+  display: block;
+  width: 750px;
+  margin-bottom: 2em;
+}
+
+.user_inputs input {
+  width: 100px;
+  height: 25px;
+  margin-left: 1em;
+  font-size: 14px;
+  float: center;
+  /*align-items: center;*/
+}
+
+.quicklook {
+  margin-top: 3em;
+  padding: 10px 10px;
+  margin-left: 5em;
+  display: flex;
+  flex-direction: row;
+}
+
+.quicklook_results {
+  padding: 10px 10px;
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5em;
+}
+
+.quicklook_results p {
+  margin-top: 3em;
+}
+
+.collapsible {
+  margin-top: 3em;
+  margin-left: 6em;
+  margin-right: 5em;
+  padding: 1em 1em;
+  /*padding-left: 5px;*/
+  /* padding-right: 5em; */
+  width: 400px;
+  height: 4em;
+  /* background-color: #777; */
+  /*background-color: rgb(78, 78, 212);*/
+  /*background-color: rgb(165, 134, 49);*/
+  background-color: steelblue;
+  color: white;
+  border: none;
+  text-align: left;
+  font-size: 16px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* float: left; */
+  border-radius: 1em;
+  display: block;
+}
+
+.collapsible:after {
+  content: '\002B';
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  float: right;
+  margin-right: 1em;
+}
+
+.active:after {
+  content: "\002D";
+  font-size: 18px;
+}
+
+.content {
+  margin-top: 2em;
+  margin-left: 1em;
+  padding-left: 1em;
+  overflow: hidden;
+  display: none;
+  border-left: none;
+}
+
+.content select {
+  width: 350px;
+  height: 35px;
+  margin-left: 1em;
+  padding: 2px 2px;
+  border: 0.5px solid navy;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.content select:hover {
+  box-shadow: 0 0 4px rgb(204, 204, 204);
+}
+
+.suggest_button {
+  background-color: lightgray;
+  color: rgb(31, 27, 27);
+  width: 150px;
+  height: 45px;
+  /*border-radius: 1em;*/
+  font-size: 16px;
+  border: solid 1px #ccc;
+}
+
+.suggest_button:hover {
+  background-color: steelblue;
+  color: white;
+}
+
+#comparison_figure {
+  width: 100%;
+  padding: 20px 20px; 
+  float: none;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.suggested_value {
+  display: flex;
+  align-items: center;
+}
+
+.section_cos {
+  margin-left: 2em;
+}
+
+.results {
+  margin-top: 2em;
+  display: flex;
+  align-items: center;
+}
+
+.cumulative_buttons {
+  background-color: white;
+  color: rgb(31, 27, 27);
+  width: 150px;
+  height: 45px;
+  /*border-radius: 1em;*/
+  font-size: 16px;
+  border: solid 1px #ccc;
+}
+
+.cumulative_buttons:hover {
+  background-color: rgb(199, 146, 146);
+  color: white;
+}
+
+.calculated_cos {
+  margin-left: 2em;
+  font-size: 20px;
+}
+
+.comparison_section select {
+  width: 200px;
+  height: 35px;
+  margin-left: 1em;
+  padding: 2px 2px;
+  border: 0.5px solid navy;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.comparison_section input {
+  width: 200px;
+  height: 35px;
+  margin-left: 1em;
+  padding: 5px 5px;
+  border: 0.5px solid navy;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.graph_button {
+  background-color: lightgray;
+  color: rgb(31, 27, 27);
+  width: 150px;
+  height: 35px;
+  font-size: 16px;
+  border: solid 1px #ccc;
+  float: right;
+}
+
+.graph_button:hover {
+  background-color: steelblue;
+  color: white;
+}
+
+.method_introductions {
+  line-height: 25px;
+  display: flex;
+  text-align: justify;
+  font-size: 16px;
+}
+
+.paper_links {
+  background-color: lightgray;
+  color: rgb(31, 27, 27);
+  width: 150px;
+  height: 45px;
+  /*border-radius: 1em;*/
+  font-size: 16px;
+  border: solid 1px #ccc;
+}
+
+.paper_links:hover {
+  /*background-color: steelblue;*/
+  background-color: rgb(82, 182, 82);
+  color: white;
+}
+
+.section_break {
+  margin-top: 1em;
+}

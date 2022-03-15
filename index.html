@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoCos v2.0</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="main_header">
+        <h1>GeoCos v2.0</h1>
+        <h2>Welcome to the web version of GeoCos!</h2>
+      </div>
+      <div class="secondary_header">
+        <h2>Interactive risk assessment for your exploration wells!</h2>
+      </div>
+      <div class="repository">
+        <h2>by Ayberk Uyanik</h2>
+        <a href="https://www.linkedin.com/in/ayberkuyanik/" target="_blank"><img src="linkedinblack.svg" alt="Linkedin Profile"></a>
+        <a href="https://github.com/Ayberk-Uyanik" target="_blank"><img src="github3.svg" alt="GitHub Profile"></a>
+      </div>
+    </div>
+  </header>
+
+  <button onclick="topFunction()" id="top_button" title="Go to top"><i class="arrow_up"></i><br>Back to Top</button>
+
+  <div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'Quick')" id="defaultOpen">Quick Look Analysis</button>
+    <button class="tablinks" onclick="openTab(event, 'Milkov')">Milkov's Approach (2015)</button>
+    <button class="tablinks" onclick="openTab(event, 'Croatian')">Malvic's Approach (2009)</button>
+    <button class="tablinks" onclick="openTab(event, 'CCOP')">CCOP's Approach (2000)</button>
+    <button class="tablinks" onclick="openTab(event, 'Graphs')">Compare CoS Results</button>
+  </div>
+
+  <div id="Quick" class="tabcontent">
+    <h2>Quick Look Analysis</h2>
+    <div id="quicklookelements" class="quicklook">
+      <div class="user_inputs">
+        <label for="source">Source Rock:</label>
+        <input id="source" class="quick" type="number" value="0"> <br></br>
+        <label for="trap">Trap:</label>
+        <input id="trap" class="quick" type="number" value="0"> <br></br>
+        <label for="migration">Migration:</label>
+        <input id="migration" class="quick" type="number" value="0"><br></br>
+        <label for="reservoir">Reservoir:</label>
+        <input id="reservuar" class="quick" type="number" value="0"><br></br>
+        <label for="preservation">Preservation:</label>
+        <input id="preservation" class="quick" type="number" value="0">
+      </div>
+      <div class="quicklook_results">
+        <button class="cumulative_buttons" onclick="quickLookCos()">Calculate CoS</button>
+        <p id="outcome"></p> 
+      </div>
+    </div>
+  </div>
+
+  <div id="Milkov" class="tabcontent">
+    <h2>Milkov's Approach</h2>
+    <p class="method_introductions">
+      The most recent table-based method has been proposed in 2015 
+      by Alexei Milkov. The advantage of this method is to suggest
+      a single CoS value for each petroleum system element. With extensively
+      detailed options, it is applicable for all basins.  
+    </p>
+    <div>
+      <form action="https://www.sciencedirect.com/science/article/abs/pii/S0012825215300301" method="get" target="_blank">
+        <button class="paper_links" type="submit">Go to Publication</button>
+      </form>
+    </div>
+    <div class="section_break">
+      <hr>
+    </div>
+    <button type="button" class="collapsible">Source Rock</button>
+    <div class="content">
+      <h3>Model Existence and Reliability</h3>
+      <form action="" class="milkov_source">
+        <label for="">Model Availability:</label>
+        <input type="radio" id="numerical" name="radio1" value="numerical" onclick="hideDropdown ()">
+        <label for="numerical">1D-3D numerical model available</label>
+        <input type="radio" id="nonumerical" name="radio1" value="numerical" onclick="hideDropdown ()">
+        <label for="nonumerical">No numerical model available</label> 
+        <br></br>
+        <label for="">Maturity Level:</label>
+        <select name="maturity" id="maturity" class="maturity_list">
+          <option value="0">Drainage area; in late maturity window</option>
+          <option value="1">Drainage area; in early maturity window</option>
+          <option value="2">Drainage area is immature</option>
+        </select>
+        <br></br>
+        <label for="">Kerogen type:</label>
+        <select name="kerogen" id="kerogen" class="kerogen_list">
+          <option value="0">Type I-II/Max. burial T > 140 C</option>
+          <option value="1">Type III-IV/Max. burial T > 200 C</option>
+          <option value="2">Type I-II/140 C > Max. burial T > 115 C</option>
+          <option value="3">Type III-IV/200 C > Max. burial T > 160 C</option>
+          <option value="4">Type I-II/115 C > Max. burial T</option>
+          <option value="5">Type I-II/160 C > Max. burial T</option>
+        </select>
+        <br></br>
+        <h3>Data Existence and Reliability</h3>
+        <label for="">Data type:</label>
+        <select name="dhi" id="dhi" class="data_list">
+          <option value="0">Pools, seeps. penetrated source rock in the basin</option>
+          <option value="1">Shows in the drilled basin, valid DHI</option>
+          <option value="2">Lack of pools, seeps and shows in the drilled basin</option>
+          <option value="3">Source rock intervals outcrop on basin margins</option>
+          <option value="4">Inferred source rocks, GDE maps are only based on seismic data</option>
+        </select>
+        <br></br>
+        <h3>Source Rock CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="showCoS ()">
+          <p class="section_cos" id="milkov_test"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select  class="cos_select" name="milkov_source_selected" id="milkov_source_selected" style="width:75px">
+        </select>
+      </form>
+    </div>
+
+    <button type="button" class="collapsible">Migration</button>
+    <div class="content">
+      <h3>Model Existence and Reliability</h3>
+      <form action="" class="milkov_migration">
+        <label for="">Model Availability:</label>
+        <input type="radio" id="migration1" name="radio2" value="0" onclick="hideDropdownMigration ()">
+        <label for="migration1">3D numerical model (Trinity, Temis, Petromod) suggests migration</label>
+        <br></br>
+        <input type="radio" id="lack_migration" name="radio2" value="1" onclick="hideDropdownMigration ()">
+        <label for="lack_migration">3D numerical model (Trinity, Temis, Petromod) suggests lack of migration</label>
+        <br></br>
+        <input type="radio" id="no_model" name="radio2" value="2" onclick="hideDropdownMigration ()">
+        <label for="no_model">No numerical model available</label>  
+        <br></br>
+        <label for="">Migration Type:</label>
+        <select name="migration_type" id="migration_type" class="migration_type_list" disabled>
+          <option value="0">Short, lower than 2km vertical and short, lower than 50km lateral migration</option>
+          <option value="1">Short, lower than 2km vertical and long, > 50km lateral migration</option>
+          <option value="2">Long, > 2km vertical and short, lower than 50km lateral migration</option>
+          <option value="3">Long, > 2km vertical and long, > 50km lateral migration</option>
+        </select>
+        <br></br>
+        <h3>Data Existence and Reliability</h3>
+        <label for="">Data type:</label>
+        <select name="migration_dhi" id="migration_dhi" class="data_list">
+          <option value="0">Pools, shows, thermogenic front within migration pathway</option>
+          <option value="1">Lack of pools, shows, thermogenic front within migration pathway</option>
+          <option value="2">DHI present</option>
+          <option value="3">DHI absent</option>
+          <option value="4">"Should not see" DHI environment</option>
+        </select>
+        <br></br>
+        <h3>Migration CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="showMigrationCoS ()">
+          <p class="section_cos" id="milkov_migration"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="milkov_migration_selected" id="milkov_migration_selected" style="width:75px">
+        </select>
+      </form>  
+    </div>
+
+    <button type="button" class="collapsible">Structure</button>
+    <div class="content">
+      <h3>Model Existence and Reliability</h3>
+      <form action="" class="milkov_structure">
+        <label for="seismic_mapping">Seismic Mapping and correlation:</label>
+        <select name="seismic_mapping" id="seismic_mapping" class="seismic_mapping_list" onchange="hideDropdownStructure ()">
+          <option value="0">High relief structure/Low structural complexity</option>
+          <option value="1">Medium relief structure/High structural complexity</option>
+          <option value="2">Low relief structure/High uncertainty of depth conversion/Rapidly changing lateral velocities</option>
+          <option value="3">Low relief structure and either high uncertainty of depth conversion/Rapidly changing lateral velocities</option>
+        </select>
+        <br></br>
+        <label for="">Interpretation Ability:</label>
+        <select name="interpretation_ability" id="interpretation_ability" class="interpretation_ability_list" on>
+          <option value="0">Easy to interpret, correlation based on nearby wells</option>
+          <option value="1">Uncertain correlation, based on remote (>50 km) wells</option>
+          <option value="2">Difficult to interpret, horizons are interrupted by thrust faults/salt diapirs</option>
+        </select>
+        <br></br>
+        <h3>Data Existence and Reliability</h3>
+        <label for="">Seismic Data:</label>
+        <input type="radio" id="seismic_2D_data" name="radio3" value="0" onclick="hideDropdownStructure ()">
+        <label for="seismic_2D_data">2D Seismic Data</label>
+        <input type="radio" id="seismic_3D_data" name="radio3" value="1" onclick="hideDropdownStructure ()">
+        <label for="seismic_3D_data">3D Seismic Data</label>
+        <br></br>
+        <label for="">Interpretation Ability:</label>
+        <select name="number_of_lines" id="number_of_lines" class="number_of_lines" disabled onclick="hideDropdownStructure ()">
+          <option value="0">Dense, 7 lines and more</option>
+          <option value="1">Sparse, 3-6 lines</option>
+          <option value="2">Very sparse, 2 lines (Lead)</option>
+        </select>
+        <br></br>
+        <h3>Structure CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="showStructureCoS ()">
+          <p class="section_cos" id="milkov_structure"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="milkov_structure_selected" id="milkov_structure_selected" style="width:75px">
+        </select>
+      </form> 
+    </div>
+    <button type="button" class="collapsible">Presence of Reservoir Facies</button>
+    <div class="content">
+      <h3>Model Existence and Reliability</h3>
+      <form action="" class="milkov_facies">
+        <label for="environment">Depositional Environment:</label>
+        <select name="environment" id="environment" class="environment_list" onchange="hideDropdownFacies ()">
+          <option value="0">Marine</option>
+          <option value="1">Continental</option>
+          <option value="2">Fractured basement or porous lava</option>
+        </select>
+        <br></br>
+        <label for="marine_facies">Facies Type (Marine):</label>
+        <select name="marine_facies" id="marine_facies" class="marine_facies_list">
+          <option value="0">Shallow marine blanket deposit, carbonates</option>
+          <option value="1">Coastal, fluvio-deltaic, deltaic, tidal</option>
+          <option value="2">Deep-water turbidites (channels, fans)</option>
+        </select>
+        <br></br>
+        <label for="continental_facies">Facies Type (Continental):</label>
+        <select name="continental_facies" id="continental_facies" class="continental_facies_list" disabled>
+          <option value="0">Eolian</option>
+          <option value="1">Lacustrine</option>
+          <option value="2">Alluvial fan, braided stream</option>
+          <option value="3">Meandering channels</option>
+        </select>
+        <br></br>
+        <h3>Data Existence and Reliability</h3>
+        <label for="well_data">Well Data:</label>
+        <select name="well_data" id="well_data" class="well_data_list" onchange="hideDropdownFacies ()">
+          <option value="0">There are wells closer than 100 km in the play</option>
+          <option value="1">No wells closer than 100 km in the play</option>
+        </select>
+        <br></br>
+        <label for="reservoir_presence">Reservoir Presence (Wells):</label>
+        <select name="reservoir_presence" id="reservoir_presence" class="reservoir-presence_list">
+          <option value="0">All wells closer than 50 km have reservoir</option>
+          <option value="1">All wells closer than 50-100 km away have reservoir</option>
+          <option value="2">Not all wells closer than 100 km have reservoir</option>
+          <option value="3">All wells closer than 100 km lack reservoir </option>
+        </select>
+        <br></br>
+        <label for="presence_seismic">Reservoir Presence (On seismic):</label>
+        <select name="presence_seismic" id="presence_seismic" class="presence_seismic_list" disabled>
+          <option value="0">Reservoir facies appear on seismic data</option>
+          <option value="1">Reservoir presence are not visible on seismic data</option>
+        </select>
+        <br></br>
+        <h3>Reservoir Facies CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="showFaciesCoS ()">
+          <p class="section_cos" id="milkov_facies"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="milkov_facies_selected" id="milkov_facies_selected" style="width:75px">
+        </select>
+      </form>
+    </div>
+    <button type="button" class="collapsible">Reservoir Deliverability</button>
+    <div class="content">
+      <h3>Reservoir Type</h3>
+      <form action="" class="milkov_reservoir_facies">
+        <label for="reservoir_lithology">Reservoir Lithology:</label>
+        <select name="reservoir_lithology" id="reservoir_lithology" class="reservoir_lithology"
+        onchange="hideDropdownDeliverability()">
+          <option value="0">Clastics</option>
+          <option value="1">Carbonates</option>
+        </select>
+      </form>  
+      <br></br>
+      <h3>Model Existence and Reliability</h3>
+      <form action="" class="milkov_reservoir_facies">
+        <label for="reservoir_model_availability">Model Availability:</label>
+        <select name="reservoir_model_availability" id="reservoir_model_availability" class="reservoir_model_availability" onchange="hideDropdownDeliverability()">
+          <option value="0">Numerical model suggests good reservoir deliverability</option>
+          <option value="1">Numerical model suggests poor reservoir deliverability</option>
+          <option value="2">No numerical model available</option>
+        </select>
+        <br></br>
+        <label for="reservoir_temperature_clastics">Reservoir burial temperature(clastics):</label>
+        <select name="reservoir_temperature_clastics" id="reservoir_temperature_clastics" class="reservoir_temperature_clastics" disabled
+        onchange="hideDropdownDeliverability ()">
+          <option value="0">35-100 C0 for oil or lower than 120 C0 for gas</option>
+          <option value="1">100-130 C0 for oil or 120-150 C0 for gas</option>
+          <option value="2">>130 C0 for oil or >150 CO for gas or oil at lower than 35 CO at present</option>
+        </select>
+        <br></br>
+        <label for="reservoir_facies1">Reservoir facies(clastics):</label>
+        <select name="reservoir_facies1" id="reservoir_facies1" class="reservoir_facies1" disabled 
+        onchange="hideDropdownDeliverability ()">
+          <option value="0">Homogeneous, clean, quartz-dominated reservoir</option>
+          <option value="1">Homogeneous reservoir dominated by arkoses, graywackes</option>
+        </select>
+        <br></br>
+        <label for="reservoir_facies2">Reservoir facies(clastics):</label>
+        <select name="reservoir_facies2" id="reservoir_facies2" class="reservoir_facies2" disabled
+        onchange="hideDropdownDeliverability ()">
+          <option value="0">Early petroleum migration (before burial to > 130-150 C0) or significant overpressure</option>
+          <option value="1">Homogeneous, clean, quartz-dominated reservoir or the product is oil (bioderadation)</option>
+        </select>
+        <br></br>
+        <label for="reservoir_temperature_carbonates">Reservoir burial temperature(carbonates):</label>
+        <select name="reservoir_temperature_carbonates" id="reservoir_temperature_carbonates" class="reservoir_temperature_carbonates" disabled onchange="hideDropdownDeliverability ()">
+          <option value="0">35-80 C0 for oil or lower than 100 C0 for gas</option>
+          <option value="1">80-130 C0 for oil or 100-150 C0 for gas</option>
+          <option value="2">>130 C0 for oil or >150 CO for gas or oil at lower than 35 CO at present</option>
+        </select>
+        <br></br>
+        <label for="reservoir_facies3">Reservoir facies(carbonates):</label>
+        <select name="reservoir_facies3" id="reservoir_facies3" class="reservoir_facies3" disabled>
+          <option value="0">Carbonate mud, chalk or core-reef facies</option>
+          <option value="1">Grainstone(packstone, oolite skeletal) or fore-reef facies</option>
+        </select>
+        <br></br>
+        <label for="reservoir_facies4">Reservoir facies(carbonates):</label>
+        <select name="reservoir_facies4" id="reservoir_facies4" class="reservoir_facies4" disabled>
+          <option value="0">Early petroleum migration (before burial to > 80-130 C0)</option>
+          <option value="1">Grainstone(packstone, oolite skeletal) or fore-reef facies and the product is oil (biodegradation)</option>
+        </select>
+        <br></br>
+        <h3>Data Existence and Reliability</h3>
+        <label for="reswell_data">Well Data:</label>
+        <select name="reswell_data" id="reswell_data" class="reswell_data_list">
+          <option value="0">All wells closer than 50 km have good reservoir deliverability</option>
+          <option value="1">All wells closer than 50-100 km away have good reservoir deliverability</option>
+          <option value="2">Not all wells closer than 100 km have good reservoir deliverability</option>
+          <option value="3">All wells closer than 100 km have poor reservoir deliverability</option>
+          <option value="4">No wells in the play, seismic data only</option>
+        </select>
+        <br></br>
+        <h3>Reservoir Deliverability CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="showDeliverabilityCoS ()">
+          <p class="section_cos" id="milkov_deliverability"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="milkov_deliverability_selected" id="milkov_deliverability_selected" style="width:75px">
+        </select>
+      </form>
+    </div>
+    <button type="button" class="collapsible">Seal</button>
+    <div class="content">
+      <h3>Model Existence and Reliability</h3>
+      <form action="" class="milkov_seal">
+        <label for="seal">Seal Type:</label>
+        <select name="seal_type" id="seal_type" class="seal_type_list" onchange="hideDropdownSeals ()">
+          <option value="0">One seal traps</option>
+          <option value="1">Poly seal traps</option>
+        </select>
+        <br></br>
+        <label for="top_seal1">Top Seal:</label>
+        <select name="top_seal1" id="top_seal1" class="top_seal1">
+          <option value="0">Conformable or unconformable</option>
+          <option value="1">Unconformable, fault plane is part of top seal</option>
+        </select>
+        <br></br>
+        <label for="top_seal2">Top Seal:</label>
+        <select name="top_seal2" id="top_seal2" class="top_seal2" onchange="hideDropdownSeals ()" disabled>
+          <option value="0">Conformable or unconformable</option>
+          <option value="1">Conformable</option>
+          <option value="2">Unconformable, erosional contact</option>
+        </select>
+        <br></br>
+        <label for="bottom_seal">Bottom or lateral seal:</label>
+        <select name="bottom_seal" id="bottom_seal" class="bottom_seal" disabled>
+          <option value="0">Salt or shale diapirism</option>
+          <option value="1">Facies change, cataclasis, change in pore fluid (tar, hydrate)</option>
+          <option value="2">Onlap, lowstand wedge</option>
+        </select>
+        <br></br>
+        <label for="trap_style">Structural style:</label>
+        <select name="trap_style" id="trap_style" class="trap_style" disabled>
+          <option value="0">Juxtaposition seal</option>
+          <option value="1">Clay-shale smear</option>
+          <option value="2">No juxtaposition, smear analysis done</option>
+          <option value="3">More than 1 fault planes or leak windows due to sand-sand juxtaposition</option>
+          <option value="4">Self-juxtaposed reservoir at depth shallower than 2.5km</option>
+        </select>
+        <br></br>
+        <h3>Data Existence and Reliability</h3>
+        <label for="seal_quality">Sealing quality:</label>
+        <select name="seal_quality" id="seal_quality" class="seal_quality">
+          <option value="0">Very good (salt, anhydrite)</option>
+          <option value="1">Good, thicker than 10m (soft shales, basalt, carbonates)</option>
+          <option value="2">Acceptable, shale of average thickness 5-10m or faults cutting top surface</option>
+          <option value="3">Poor, thinner than 5m or sand rich or brittle shale</option>
+          <option value="4">Top seal is inferred from the analysis of seismic data</option>
+        </select>
+        <br></br>
+        <h3>Seal CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="showSealCoS ()">
+          <p class="section_cos" id="milkov_seal"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="milkov_seal_selected" id="milkov_seal_selected" style="width: 75px">
+        </select>
+      </form>  
+    </div>
+    <br></br>
+    <hr>
+    <div class="results">
+      <button id="milkov_click" class="cumulative_buttons" onclick="displayCumulativeCos()"> Calculate CoS 
+      </button>
+      <p class="calculated_cos" id="milkov_cumulative_cos"></p>
+    </div>
+  </div>
+
+  <div id="Croatian" class="tabcontent">
+    <h2>Malvic's Approach</h2>
+    <p class="method_introductions">
+      This method has been proposed in a 2009 paper named as 
+      "Stochastical approach in deterministic calculation of geological risk - theory and example".
+      It is a table-based cos calculation method focusing on Drava depression of Croatia.
+      However, it can be used for all hydrocarbon basins as well. 
+    </p>
+    <div>
+      <form action="https://www.semanticscholar.org/paper/Stochastical-approach-in-deterministic-calculation-Malvi%C3%A6/bb2d0c9292dbe486c2bad20b948bbd5b6a759765" method="get" target="_blank">
+        <button class="paper_links" type="submit">Go to Publication</button>
+      </form>
+    </div>
+    <div class="section_break">
+      <hr>
+    </div>
+    <button type="button" class="collapsible">Source Rock</button>
+    <div class="content">
+      <label for="malvic_source">Source Rock Facies:</label>
+      <select name="malvic_source" id="malvic_source" class="source_list_malvic">
+        <option value="1">Kerogen type I and/or II</option>
+        <option value="0.75">Kerogen type III</option>
+        <option value="0.5">Favourable palaeo-facies organic matter sedimentation</option>
+        <option value="0.25">Regionally known source rock facies, but not proven on observed locality </option>
+        <option value="0.05">Undefined source rock type</option>
+      </select>
+      <br></br>
+      <label for="malvic_maturity">Source Rock Maturity:</label>
+      <select name="malvic_maturity" id="malvic_maturity" class="maturity_list_malvic">
+        <option value="1">Sediments are in catagenesis phase (oil or wet gas)</option>
+        <option value="0.75">Sediments are metagenesis phase</option>
+        <option value="0.5">Sediments are in early catagenesis phase</option>
+        <option value="0.25">Sediments are in late diagenesis phase </option>
+        <option value="0.05">Undefined maturity level</option>
+      </select>
+      <br></br>
+      <label for="malvic_data_sources">Data Source:</label>
+      <select name="malvic_data_sources" id="malvic_data_sources" class="data_list_malvic">
+        <option value="1">Geochemical analysis on core and fluids</option>
+        <option value="0.75">Analogy with close located geochemical analyses</option>
+        <option value="0.5">Thermal modeling and calculation</option>
+        <option value="0.25">Thermal modeling at just a few locations</option>
+        <option value="0.05">Undefined data sources</option>
+      </select>
+      <br></br>
+      <div class="suggested_value">
+        <button class="suggest_button" onclick="malvicSource()"> Source CoS 
+        </button>
+        <p class="section_cos" id="test"></p>
+      </div>
+    </div>
+    <button type="button" class="collapsible">Migration</button>
+    <div class="content">
+      <label for="malvic_hc_shows">Hydrocarbon Shows:</label>
+      <select name="malvic_hc_shows" id="malvic_hc_shows" class="hc_shows_malvic">
+        <option value="1">Production of hydrocarbons</option>
+        <option value="0.75">Hydrocarbons in traces; New gas detected > %10</option>
+        <option value="0.5">Oil determined in cores (luminescent analysis, core test)</option>
+        <option value="0.25">Oil determined in traces(luminescent analysis, core test)</option>
+        <option value="0.05">Hydrocarbons are not observed</option>
+      </select>
+      <br></br>
+      <label for="malvic_trap_position">Position of trap:</label>  
+      <select name="malvic_trap_position" id="malvic_trap_position" class="trap_position_malvic">
+        <option value="1">Trap is located in proven migration distance</option>
+        <option value="0.75">Trap is located between two source rock depocenters</option>
+        <option value="0.5">Short migration pathway (10km or less)</option>
+        <option value="0.25">Long migration pathway (> 10 km)</option>
+        <option value="0.05">Undefined source rocks</option>
+      </select>
+      <br></br>
+      <label for="malvic_timing">Timing of trap:</label>  
+      <select name="malvic_timing" id="malvic_timing" class="timing_malvic">
+        <option value="1">Trap is older than matured source rocks</option>
+        <option value="0.75">Trap is younger than matured source rocks</option>
+        <option value="0.5">Relation between trap and source rocks is unknown</option>
+      </select>
+      <br></br>
+      <div class="suggested_value">
+        <button class="suggest_button" onclick="malvicMigration()"> Migration CoS 
+        </button>
+        <p class="section_cos" id="migration_cos"></p>
+      </div>
+    </div>
+    <button type="button" class="collapsible">Reservoir</button>
+    <div class="content">
+      <label for="malvic_reservoir_type">Reservoir type:</label>
+      <select name="malvic_reservoir_type" id="malvic_reservoir_type" class="reseroir_type_malvic">
+        <option value="1">Sandstone;clean and lateral extended, Basement; granite, gneiss, gabbro, Dolomites with secondary porosity, Algae reefs with significant secondary porosity</option>
+        <option value="0.75">Sandstones; rich in silt and clay, Basement with secondary porosity, limited extending, Algae reefs filled with skeletal debris, mud and marine cements</option>
+        <option value="0.5">Sandstone including significant portion of silt/clay particles, limited extending</option>
+        <option value="0.25">Basement rocks including low secondary porosity and limited extending</option>
+        <option value="0.05">Undefined reservoir type</option>
+      </select>
+      <br></br>
+      <label for="malvic_porosity">Porosity features:</label>
+      <select name="malvic_porosity" id="malvic_porosity" class="reseroir_type_malvic">
+        <option value="1">Primary porosity > %15, Secondary porosity > %5</option>
+        <option value="0.75">Primary porosity %5-15, Secondary porosity %1-5</option>
+        <option value="0.5">Primary porosity less than %10, Permeability less than 0.01</option>
+        <option value="0.25">Secondary porosity less than %1</option>
+        <option value="0.05">Undefined porosity values</option>
+      </select>
+      <br></br>
+      <div class="suggested_value">
+        <button class="suggest_button" onclick="malvicReservoir()"> Reservoir CoS 
+        </button>
+        <p class="section_cos" id="reservoir_cos"></p>
+      </div>
+    </div>
+    <button type="button" class="collapsible">Trap</button>
+    <div class="content">
+      <label for="malvic_structural_trap">Structural trap style:</label>
+      <select name="malvic_structural_trap" id="malvic_structural_trap" class="reseroir_type_malvic">
+        <option value="1">Anticline and buried hill linked to basement</option>
+        <option value="0.75">Faulted anticline</option>
+        <option value="0.5">Structural nose closed by faults</option>
+        <option value="0.25">Any "positive" faulted structure, margins are not firmly defined</option>
+        <option value="0.05">Undefined structural framework</option>
+      </select>
+      <br></br>
+      <label for="malvic_stratigraphic_trap">Stratigraphic or combined trap style:</label>
+      <select name="malvic_stratigraphic_trap" id="malvic_stratigraphic_trap" class="reseroir_type_malvic">
+        <option value="1">Algae reef form</option>
+        <option value="0.75">Sanddstones, pinched out</option>
+        <option value="0.5">Sediments changed by diagenesis</option>
+        <option value="0.25">Abrupt changes of petrophysical properties (clay, different facies)</option>
+        <option value="0.05">Undefined stratigraphic framework</option>
+      </select>
+      <br></br>
+      <label for="malvic_cap_rock">Quality of Cap rock:</label>
+      <select name="malvic_cap_rock" id="malvic_cap_rock" class="reseroir_type_malvic">
+        <option value="1">Regional proven cap rock (Seals, isolator)</option>
+        <option value="0.75">Rocks without reservoir properties</option>
+        <option value="0.5">Rocks permeable for gas (gas leakage)</option>
+        <option value="0.25">Permeable rocks with locally higher silt/clay content</option>
+        <option value="0.05">Undefined cap rock</option>
+      </select>
+      <br></br>
+      <div class="suggested_value">
+        <button class="suggest_button" onclick="malvicTrap()"> Trap CoS 
+        </button>
+        <p class="section_cos" id="trap_cos"></p>
+      </div>
+    </div>
+    <button type="button" class="collapsible">Preservation of Hydrocarbons</button>
+    <div class="content">
+      <label for="malvic_pressure">Formation pressure:</label>
+      <select name="malvic_pressure" id="malvic_pressure" class="reseroir_type_malvic">
+        <option value="1">Higher than hydrostatic</option>
+        <option value="0.75">Approximately hydrostatic</option>
+        <option value="0.5">Lower than hydrostatic</option>
+      </select>
+      <br></br>
+      <label for="malvic_water">Formation water:</label>
+      <select name="malvic_water" id="malvic_water" class="reseroir_type_malvic">
+        <option value="1">Still aquifer of field waters</option>
+        <option value="0.75">Active aquifer of field waters</option>
+        <option value="0.5">Infiltrated aquifer from adjacent formations</option>
+        <option value="0.25">Infiltrated aquifer from surface</option>
+      </select>
+      <br></br>
+      <div class="suggested_value">
+        <button class="suggest_button" onclick="malvicPreservation()"> Preservation CoS 
+        </button>
+        <p class="section_cos" id="preservation_cos"></p>
+      </div>
+    </div>
+    <br></br>
+    <hr>
+    <div class="results">
+      <button id="malvic_click" class="cumulative_buttons" onclick="malvicCos()"> Calculate CoS 
+      </button>
+      <p class="calculated_cos" id="full_cos"></p>
+    </div>
+  </div>
+
+  <div id="CCOP" class="tabcontent">
+    <h2>CCOP's Approach</h2>
+    <p class="method_introductions">
+      CCOP stands for "The Coordinating Committee for Coastal 
+      and Offshore Geoscience Programmes in East and Southeast Asia". Since 1987, it is 
+      an independent intergovernmental organisation carrying out activities in energy, mineral,
+      coastal zone and geohazards sectors. One of its' working groups 
+      has proposed risk assessment table in 2000. The tables suggest a risk range for each petroleum system element. 
+    </p>
+    <div>
+      <form action="https://www.semanticscholar.org/paper/The-CCOP-Guidelines-for-Risk-Assessment-of-Caluyong/5d69f1cba60213ecfc1cbedbdaf953d26e045413" method="get" target="_blank">
+        <button class="paper_links" type="submit">Go to Publication</button>
+      </form>
+    </div>
+    <div class="section_break">
+      <hr>
+    </div>
+    <button type="button" class="collapsible">Source Rock</button>
+    <div class="content">
+      <h3>Data Reliability</h3>
+      <form action="" class="cnooc_source">
+        <label for="">Source rock presence:</label>
+        <select name="cnooc_source_presence" id="cnooc_source_presence" class="cnooc_source_presence_list">
+          <option value="0">Proven source rock</option>
+          <option value="1">Quality reduced source rock</option>
+          <option value="2">Hypothetical source rock</option>
+          <option value="3">Speculative source rock</option>
+        </select>
+        <br></br>
+        <label for="">Maturity/Volume Level:</label>
+        <select name="cnooc_source_maturity" id="cnooc_source_maturity" class="cnooc_source_maturity_list">
+          <option value="0">Sufficient volume</option>
+          <option value="1">Marginal volume</option>
+          <option value="2">Marginal mature</option>
+        </select>
+        <br></br>
+        <label for="">Depositional Environment:</label>
+        <select name="cnooc_source_environment" id="cnooc_source_environment" class="cnooc_source_environment_list">
+          <option value="0">Restricted marine or lacustrine environment with sapropelic organic matter</option>
+          <option value="1">Mixed marine or lacustrine environment with dispersed sapropelic organic matter</option>
+          <option value="2">Deltaic environment with mostly humic organic matter (terrestrial; mainly gas)</option>
+        </select>
+        <br></br>
+        <h3>Source Rock CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="cnoocSourceCos ()">
+          <p class="section_cos" id="cnooc_source_cos"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="ccop_source_selected" id="ccop_source_selected"
+        style="width:50px">
+        </select>
+      </form>
+    </div>
+    <button type="button" class="collapsible">Migration</button>
+    <div class="content">
+      <h3>Data Reliability</h3>
+      <form action="" class="cnooc_migration">
+        <label for="">Migration type:</label>
+        <select name="cnooc_migration_type" id="cnooc_migration_type" class="cnooc_migration_type_list">
+          <option value="0">Local migration</option>
+          <option value="1">Lateral migration without barriers</option>
+          <option value="2">Lateral migration with barriers</option>
+          <option value="3">Vertical migration without barriers</option>
+          <option value="4">Vertical migration with barriers</option>
+          <option value="5">Long distance "fill-spill" migration</option>
+          <option value="6">The trap is in the shadow of migration</option>
+        </select>
+        <br></br>
+        <label for="">Timing:</label>
+        <select name="cnooc_timing" id="cnooc_timing" class="cnooc_timing_list">
+          <option value="0">The trap is formed before onset of hydrocarbon migration</option>
+          <option value="1">Time of trap formation and time of migration are overlapping</option>
+          <option value="2">The trap is formed when the source rock is supposed to be "overcooked"</option>
+        </select>
+        <br></br>
+        <h3>Migration CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="cnoocMigrationCos ()">
+          <p class="section_cos" id="cnooc_migration_cos"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="ccop_migration_selected" id="ccop_migration_selected"
+        style="width:50px">
+        </select>
+      </form>
+    </div>
+    <button type="button" class="collapsible">Reservoir</button>
+    <div class="content">
+      <h2>Reservoir Presence</h2>
+      <h3>Reservoir Facies</h3>
+      <form action="" class="cnooc_reservoir">
+        <label for="">Depositional Environment:</label>
+        <select name="cnooc_reservoir_type" id="cnooc_reservoir_type" class="cnooc_reservoir_type_list" onchange="hideDropdownCnoocReservoir ()">
+          <option value="0">Marine</option>
+          <option value="1">Continental</option>
+          <option value="2">Others</option>
+        </select>
+        <br></br>
+        <label for="">Facies Type I (Marine):</label>
+        <select name="cnooc_reservoir_type1" id="cnooc_reservoir_type1" class="cnooc_reservoir_type_list">
+          <option value="0">Shallow marine, "blanket"</option>
+          <option value="1">Coastal, deltaic, tidal</option>
+          <option value="2">Submarine fan</option>
+          <option value="3">Carbonates</option>
+        </select>
+        <br></br>
+        <label for="">Facies Type II (Continental):</label>
+        <select name="cnooc_reservoir_type2" id="cnooc_reservoir_type2" class="cnooc_reservoir_type_list" disabled>
+          <option value="0">Lacustrine, deltaic</option>
+          <option value="1">Alluvial fan, braided stream, meandering channel</option>
+          <option value="2">Eolian</option>
+        </select>
+        <br></br>
+        <label for="">Facies Type III (Others):</label>
+        <select name="cnooc_reservoir_type3" id="cnooc_reservoir_type3" class="cnooc_reservoir_type_list" disabled>
+          <option value="0">Fractured basement</option>
+          <option value="1">Fractured, porous lava</option>
+        </select>
+        <br></br>
+        <h3>Data Reliability</h3>
+        <label for="">Data Quality:</label>
+        <select name="cnooc_reservoir_data_quality" id="cnooc_reservoir_data_quality" class="cnooc_reservoir_type_list">
+          <option value="0">Direct data, proximal deposits</option>
+          <option value="1">Direct data, more distal deposits</option>
+          <option value="2">Limited data, discontinuous deposits</option>
+          <option value="3">Indirect data, seismic sequence analysis</option>
+        </select>
+        <br></br>
+        <h3>Reservoir Facies CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="cnoocReservoirFaciesCos ()">
+          <p class="section_cos" id="cnooc_reservoir_facies_cos"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="ccop_facies_selected" 
+        id="ccop_facies_selected" style="width:50px">
+        </select>
+        <br></br>
+        <hr>
+      </form>
+      <h2>Reservoir Quality</h2>
+      <h3>Reservoir Depth and Quality</h3>
+      <form action="" class="cnooc_reservoir">
+        <label for="">Reservoir Depth:</label>
+        <select name="cnooc_reservoir_quality" id="cnooc_reservoir_quality" class="cnooc_reservoir_type_list">
+          <option value="0">1-3 km</option>
+          <option value="1">3-4 km</option>
+          <option value="2">Deeper than 4 km</option>
+        </select>
+        <br></br>
+        <label for="">Reservoir Quality:</label>
+        <select name="cnooc_reservoir_quality1" id="cnooc_reservoir_quality1" class="cnooc_reservoir_type_list">
+          <option value="0">Homogeneous, clean reservoir</option>
+          <option value="1">Mixed, unclean reservoir</option>
+        </select>
+        <br></br>
+        <h3>Data Reliability</h3>
+        <label for="">Data Quality:</label>
+        <select name="cnooc_reservoir_data_quality1" id="cnooc_reservoir_data_quality1" class="cnooc_reservoir_type_list">
+          <option value="0">Direct data, proximal deposits</option>
+          <option value="1">Direct data, more distal deposits</option>
+          <option value="2">Limited data, discontinuous deposits</option>
+          <option value="3">Indirect data, seismic sequence analysis</option>
+        </select>
+        <br></br>
+        <h3>Reservoir Quality CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="cnoocReservoirQualityCos ()">
+          <p class="section_cos" id="cnooc_reservoir_quality_cos"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="ccop_quality_selected" 
+        id="ccop_quality_selected" style="width:50px">
+        </select>
+        <br></br>
+        <h2>Cumulative Reservoir CoS</h2>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Show CoS" onclick="cnoocCumulativeReservoirCos ()">
+          <p class="section_cos" id="cnooc_cumulative_reservoir_cos"></p>
+        </div>
+      </form>    
+    </div>
+    <button type="button" class="collapsible">Trapping Mechanism</button>
+    <div class="content">
+      <h2>Seismic Interpretation</h2>
+      <h3>Seismic Correlation & Mapping</h3>
+      <form action="" class="cnooc_trapping">
+        <label for="">Correlation type:</label>
+        <select name="cnooc_correlation_type" id="cnooc_correlation_type" class="cnooc_trapping_list">
+          <option value="0">Good correlation, nearby wells</option>
+          <option value="1">Uncertain correlation, distant wells</option>
+          <option value="2">Unreliable correlation, analogue model</option>
+        </select>
+        <br></br>
+        <label for="">Seismic mapping:</label>
+        <select name="cnooc_mapping_type" id="cnooc_mapping_type" class="cnooc_trapping_list">
+          <option value="0">Low structural complexity</option>
+          <option value="1">High structural complexity</option>
+          <option value="2">Low relief, uncertain depth conversion</option>
+        </select>
+        <br></br>
+        <h3>Data Reliability</h3>
+        <label for="">Seismic data:</label>
+        <select name="cnooc_seismic_data_type" id="cnooc_seismic_data_type" class="cnooc_trapping_list" onchange="hideDropdownCnoocSeismicTrap ()">
+          <option value="0">3D Seismic</option>
+          <option value="1">2D Seismic</option>
+        </select>
+        <br></br>
+        <label for="">Grid size:</label>
+        <select name="cnooc_grid_size" id="cnooc_grid_size" class="cnooc_trapping_list" disabled>
+          <option value="0">Dense grid size (> 5 times)</option>
+          <option value="1">Open grid size (2-5 times)</option>
+          <option value="2">Very open grid (Lower than 2 times)</option>
+        </select>
+        <br></br>
+        <h3>Seismic Interpretation CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="cnoocSeismicInterpretationCos ()">
+          <p class="section_cos" id="cnooc_seismic_interpretation_cos"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="ccop_interpret_selected" 
+        id="ccop_interpret_selected" style="width:50px">
+        </select>
+        <br></br>
+        <hr>
+      </form>
+      <h2>Seal Mechanism</h2>  
+      <h3>Seal Type</h3>
+      <form action="" class="cnooc_seal">
+        <label for="">Seal type:</label>
+        <select name="cnooc_seal_type" id="cnooc_seal_type" class="cnooc_trapping_list" onchange="hideDropdownCnoocSeal ()">
+          <option value="0">Simple seal</option>
+          <option value="1">Combined seal</option>
+        </select>
+        <br></br>
+        <label for="">Top Surface:</label>
+        <select name="cnooc_seal_top" id="cnooc_seal_top" class="cnooc_trapping_list">
+          <option value="0">Conformable</option>
+          <option value="1">Unconformable</option>
+        </select>
+        <br></br>
+        <label for="">Structural style:</label>
+        <select name="cnooc_seal_structure" id="cnooc_seal_structure" class="cnooc_trapping_list" disabled>
+          <option value="0">Onlap, low-stand wedge</option>
+          <option value="1">Downfaulted structures</option>
+          <option value="2">"Shale out"</option>
+          <option value="3">Subcrop structures</option>
+        </select>
+        <br></br>
+        <h3>Data Reliability</h3>
+        <label for="">Seal Quality:</label>
+        <select name="cnooc_seal_data_quality" id="cnooc_seal_data_quality" class="cnooc_seal_type_list">
+          <option value="0">Very good</option>
+          <option value="1">Good</option>
+          <option value="2">Acceptable</option>
+          <option value="3">Poor</option>
+        </select>
+        <br></br>
+        <h3>Seal CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="cnoocSealCos ()">
+          <p class="section_cos" id="cnooc_seal_cos"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="ccop_seal_selected" 
+        id="ccop_seal_selected" style="width:50px">
+        </select>
+        <br></br>
+        <h2>Cumulative Trapping Mechanism CoS</h2>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Show CoS" onclick="displayCcopSealCos ()">
+          <p class="section_cos" id="cnooc_cumulative_trapping_cos"></p>
+        </div>
+      </form>  
+    </div>
+    <button type="button" class="collapsible">Preservation</button>
+    <div class="content">
+      <h3>Data Reliability</h3>
+      <form action="" class="cnooc_preservation">
+        <label for="">Geological processes after accumulation:</label>
+        <select name="cnooc_preservation_type" id="cnooc_preservation_type" class="cnooc_preservation_type_list" onchange="hideDropdownCnoocPreservation ()">
+          <option value="0">No late activity</option>
+          <option value="1">Erosion</option>
+          <option value="2">Uplift and tilting</option>
+          <option value="3">Reactivated faults</option>
+        </select>
+        <br></br>
+        <label for="">Process Type 1:</label>
+        <select name="process_type_1" id="process_type_1" class="cnooc_preservation_type_list">
+          <option value="0">No tectonic activity after accumulation</option>
+          <option value="1">Shallow traps, possible biodegradation</option>
+        </select>
+        <br></br>
+        <label for="">Process Type 2:</label>
+        <select name="process_type_2" id="process_type_2" class="cnooc_preservation_type_list" disabled>
+          <option value="0">Trap in connection to generating source</option>
+          <option value="1">Trap not connected to generating source</option>
+        </select>
+        <br></br>
+        <label for="">Process Type 3:</label>
+        <select name="process_type_3" id="process_type_3" class="cnooc_preservation_type_list" disabled>
+          <option value="0">Form, volume, top point not changed</option>
+          <option value="1">Form, volume, top point changed</option>
+        </select>
+        <br></br>
+        <label for="">Process Type 4:</label>
+        <select name="process_type_4" id="process_type_4" class="cnooc_preservation_type_list" disabled>
+          <option value="0">Compression and/or transpression</option>
+          <option value="1">Tension</option>
+        </select>
+        <br></br>
+        <h3>Data Reliability</h3>
+        <label for="">Data Control:</label>
+        <select name="data_control" id="data_control" class="cnooc_preservation_type_list">
+          <option value="0">Positive, unambigious data (seismic, wells, etc.)</option>
+          <option value="1">Data control and interpretation is poor to fair</option>
+          <option value="2">Negative, unambigious data (seismic, wells, etc.)</option>
+        </select>
+        <br></br>
+        <h3>Preservation CoS</h3>
+        <div class="suggested_value">
+          <input type="button" class="suggest_button" value="Suggested CoS" onclick="cnoocPreservationCoS ()">
+          <p class="section_cos" id="cnooc_preservation_cos"></p>
+        </div>
+        <br></br>
+        <label for="">Selected CoS:</label>
+        <select class="cos_select" name="ccop_preserve_selected" 
+        id="ccop_preserve_selected" style="width:50px">
+        </select>
+      </form>  
+    </div>
+    <br></br>
+    <hr>
+    <div class="results">
+      <button id="ccop_click" class="cumulative_buttons" onclick="displayCcopCos()">Calculate CoS 
+      </button>
+      <p class="calculated_cos" id="ccop_cumulative_cos"></p>
+    </div>
+  </div>
+
+  <div id="Graphs" class="tabcontent">
+    <h2>Comparison Graph</h2>
+    <div class="comparison_section">
+      <label for="prospect">Please enter the name of your prospect:</label>
+      <input class="prospect_name" id="prospect" type="text">
+      <br></br>
+      <label for="chart_type">Please select the chart type:</label>
+      <select name="" id="chart_type">
+            <option value="0">Bar Chart</option>
+            <option value="1">Spider/Radar Chart</option>
+      </select>
+      <button class="graph_button" onclick="generateGraph(vel, t)">Display Chart</button>
+    </div>
+    <div class="graph" id="plotly_graph" style="width:100%;margin-top:2em;"></div>
+  </div>
+
+  <script src="scripts.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</body>
+</html>
