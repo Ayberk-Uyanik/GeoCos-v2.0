@@ -1,0 +1,17 @@
+{
+  "name": "GeoCos",
+  "version": "2.0.0",
+  "description": "",
+  "main": "server.js",
+  "repository": "https://github.com/Ayberk-Uyanik/GeoCos-v2.0",
+  "author": "Render Developers",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.0.0",
+    "plotlyjs":"2.35.2"
+  }
+}
