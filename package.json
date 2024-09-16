@@ -12,6 +12,6 @@
   },
   "dependencies": {
     "express": "^5.0.0",
-    "Plotly.js":"2.35.2"
+    "plotly.js":"2.35.2"
   }
 }
